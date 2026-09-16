@@ -1,0 +1,11 @@
+.venv/
+__pycache__/
+*.pyc
+.env
+.env.demo-keys
+.DS_Store
+.pytest_cache/
+*.egg-info/
+books/adjusting_entry.csv
+books/leftover.csv
+.composer-eval/
