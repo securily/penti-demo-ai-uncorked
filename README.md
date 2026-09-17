@@ -1,8 +1,22 @@
 # Penti demo — AI Uncorked
 
+<p align="center">
+  <a href="https://penti.ai"><img src="docs/penti-logo.svg" alt="Penti" height="36" /></a>
+  &nbsp;&nbsp;&nbsp;
+  <a href="https://www.silverlogic.com"><img src="docs/silverlogic-logo.jpg" alt="The SilverLogic" height="56" /></a>
+  &nbsp;&nbsp;&nbsp;
+  <a href="https://www.brdgit.com"><img src="docs/brdgit-logo.jpg" alt="BRDGIT" height="56" /></a>
+</p>
+
+<p align="center">
+  <strong>Penti</strong>
+  · hosted by <strong>The SilverLogic</strong>
+  · sponsored by <strong>BRDGIT</strong>
+</p>
+
 Live Harbor Books agent from **Stop Chatting. Start Looping: Live Agents in Production**.
 
-Shared for [AI Uncorked](https://lnkd.in/ec9E_khp) at **The SilverLogic HQ, Boca Raton** — Wednesday, September 16, 5:30–8:30 PM. Talk by **Cariel Cohen**, Co-Founder and CTO of [Penti.ai](https://penti.ai). Sponsored by BRDGIT.
+Shared for **[AI Uncorked](https://lnkd.in/ec9E_khp)** at **The SilverLogic** HQ, Boca Raton — Wednesday, September 16, 2026, 5:30–8:30 PM (6413 Congress Ave #130). Talk by **Cariel Cohen**, Co-Founder and CTO of **[Penti.ai](https://penti.ai)**. Sponsored by **[BRDGIT](https://www.brdgit.com)**.
 
 This is the same Read → Eval → Print → Loop you watch on stage: an agent looks at the books, decides one next step, runs it, and repeats until leftover cash matches the register.
 

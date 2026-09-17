@@ -6,15 +6,12 @@
     t = t.replace(/\b10[, ]?000\b/g, "\u0001");
     t = t.replace(/\bspent\s+0\b/gi, "spent \u0002");
     t = t.replace(/\bleft(?:over)?\s+0\b/gi, "leftover \u0002");
-    t = t.replace(/,(\s*)0\b/g, ", \u0002");
     return t.replace(/\u0001/g, "$10,000").replace(/\u0002/g, "$0");
   }
 
   function moneyHtml(s) {
-    return escapeHtml(moneyCopy(s)).replace(/\$[\d,]+/g, function (m) {
-      var cls = "money";
-      if (m === "$10,000") cls += " leftover";
-      else if (m === "$0") cls += " zero";
+    return escapeHtml(moneyCopy(s)).replace(/\$10,000|\$0\b/g, function (m) {
+      var cls = "money" + (m === "$10,000" ? " leftover" : " zero");
       return '<span class="' + cls + '">' + m + "</span>";
     });
   }

@@ -75,23 +75,25 @@
     t = t.replace(/\b10[, ]?000\b/g, "\u0001");
     t = t.replace(/\bspent\s+0\b/gi, "spent \u0002");
     t = t.replace(/\bleft(?:over)?\s+0\b/gi, "leftover \u0002");
-    t = t.replace(/,(\s*)0\b/g, ", \u0002");
     return t.replace(/\u0001/g, "$10,000").replace(/\u0002/g, "$0");
   }
   function audience(s) { return withDollars(s); }
   function formatBooksOut(text) {
-    var lines = String(text || "").split("\n");
-    if (!lines[0] || lines[0].indexOf(",") < 0 || !/budget|spent|left/i.test(lines[0])) return withDollars(text);
+    var raw = String(text || "");
+    if (/\$/.test(raw)) return withDollars(raw);
+    var lines = raw.split("\n");
+    if (!lines[0] || lines[0].indexOf(",") < 0 || !/budget|spent|left/i.test(lines[0])) return withDollars(raw);
     return lines.map(function (line, i) {
       if (!i) return line;
-      return line.replace(/,(-?\d+)/g, function (_, n) { return "," + dollars(n); });
+      return line.split(",").map(function (cell, j) {
+        if (!j || !/^-?\d+$/.test(cell.trim())) return cell;
+        return dollars(cell.trim());
+      }).join(",");
     }).join("\n");
   }
   function decorateMoneyHtml(escaped) {
-    return String(escaped || "").replace(/\$[\d,]+/g, function (m) {
-      var cls = "money";
-      if (m === "$10,000") cls += " leftover";
-      else if (m === "$0") cls += " zero";
+    return String(escaped || "").replace(/\$10,000|\$0\b/g, function (m) {
+      var cls = "money" + (m === "$10,000" ? " leftover" : " zero");
       return '<span class="' + cls + '">' + m + "</span>";
     });
   }
@@ -245,7 +247,7 @@
   }
   function readScene(round, data) {
     var prev = history[history.length - 1];
-    var last = round === 1 ? "Nothing yet — this is the first round." : (prev && prev.stdout ? formatBooksOut(audience(prev.stdout)) : "(the previous command returned nothing)");
+    var last = round === 1 ? "Nothing yet — this is the first round." : (prev && prev.stdout ? formatBooksOut(prev.stdout) : "(the previous command returned nothing)");
     var dod = (data && data.dod) || lastDod;
     var nextGoal = (dod && dod.next) ? (dod.next.id + " — " + dod.next.title) : (GOALS[round - 1] || "");
     var form = head(0, round) +
@@ -480,7 +482,7 @@
     if (isExit) learned = "The agent reported its finding and exited the loop.";
     else if (v && v.ok) learned = v.id + " passed. " + withDollars(v.evidence || "");
     else if (v && v.ok === false) learned = (v.id || "Slice") + " did not pass. " + withDollars(v.reason || "");
-    else { var out = (data && data.stdout || "").trim(); learned = out ? "Learned: " + withDollars(formatBooksOut(out)) : "That command returned nothing — the next round tries a new angle."; }
+    else { var out = (data && data.stdout || "").trim(); learned = out ? "Learned: " + formatBooksOut(out) : "That command returned nothing — the next round tries a new angle."; }
     var dodDone = data && data.dod && data.dod.complete;
     var nextLine = (round < MAX_TURNS && !isExit && !dodDone) ? "Round " + (round + 1) + " starts again with Look." : "The work is done — the books match the cash.";
     var form = head(3, round) + '<div class="loop-focus"><div>' + ring(3) + '</div><div><p class="loop-learned" data-twk="r'+round+'-loop" data-tw="' + b64enc(learned) + '"></p><p class="loop-next">' + esc(nextLine) + "</p></div></div>" + dodHtml((data && data.dod) || lastDod);
