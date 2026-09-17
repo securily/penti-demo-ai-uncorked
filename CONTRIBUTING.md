@@ -10,14 +10,14 @@ cd penti-demo-ai-uncorked
 python -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
 cp .env.example .env   # fill in your own keys locally
-pytest -q
+python -m pytest -q
 ```
 
 ## How a change lands
 
 1. Fork the repository and create a branch off `main`.
 2. Make your change. Keep the pull request focused on one thing.
-3. Run `pytest -q` and `ruff check .` locally.
+3. Run `python -m pytest -q` and `ruff check .` locally.
 4. Open a pull request and fill in the template.
 5. Automated checks run, and the maintainer named in [CODEOWNERS](.github/CODEOWNERS) reviews it.
 6. Once the checks pass and the review is approved, a maintainer merges it.
