@@ -8,12 +8,12 @@
 
 ## How it was tested
 
-<!-- Commands you ran and what you saw. For example: pytest -q, ruff check . -->
+<!-- Commands you ran and what you saw. For example: python -m pytest -q, ruff check . -->
 
 ## Checklist
 
 * [ ] No secrets, credentials or real customer data in the diff, including tests and fixtures
-* [ ] `pytest -q` passes locally
+* [ ] `python -m pytest -q` passes locally
 * [ ] `ruff check .` passes locally
 * [ ] New or changed behavior is covered by a test
 * [ ] Any new dependency is justified above
