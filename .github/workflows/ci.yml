@@ -22,11 +22,11 @@ jobs:
       matrix:
         python-version: ["3.11", "3.12"]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           persist-credentials: false
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v7
         with:
           python-version: ${{ matrix.python-version }}
           cache: pip
@@ -46,7 +46,9 @@ jobs:
       - name: Run tests
         run: |
           set +e
-          pytest -q
+          # python -m pytest puts the repository root on sys.path so tests can
+          # import the modules at the top level of this repo
+          python -m pytest -q
           code=$?
           # exit code 5 means pytest collected no tests, which is not a failure here
           if [ "$code" -eq 5 ]; then exit 0; fi
@@ -56,11 +58,11 @@ jobs:
     name: dependency audit
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           persist-credentials: false
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v7
         with:
           python-version: "3.12"
 
